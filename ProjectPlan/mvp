@@ -1,0 +1,1885 @@
+# SK Ways Logistics — Complete MVP Development Prompt
+
+## 1. Project Overview
+
+Build a production-ready logistics management web application called **SK Ways Logistics**.
+
+SK Ways is a startup logistics company initially operating as an **asset-light B2B local delivery service**.
+
+The initial business model is:
+
+* Customers/businesses request deliveries.
+* SK Ways receives and manages delivery orders.
+* Admin assigns orders to partner drivers.
+* Drivers update delivery status.
+* Customers can track their shipments.
+* Admin manages customers, drivers, vehicles, orders, pricing and payments.
+* The system should be designed so it can later scale into transport, cargo, warehousing and 3PL services.
+
+### Technology Stack
+
+Use:
+
+* **Next.js 15+**
+* **TypeScript**
+* **App Router**
+* **React**
+* **Tailwind CSS**
+* **shadcn/ui**
+* **Supabase**
+
+  * PostgreSQL
+  * Authentication
+  * Row Level Security
+  * Storage
+  * Realtime where appropriate
+* **Vercel** for deployment
+* **Zod** for validation
+* **React Hook Form** for forms
+* **TanStack Query** where client-side server-state management is useful
+* Use server components by default.
+* Use client components only where interaction is required.
+
+Do not introduce unnecessary frameworks or dependencies.
+
+---
+
+# 2. Product Goals
+
+The application must have three primary user types:
+
+1. Customer
+2. Driver
+3. Admin
+
+The architecture must allow future roles such as:
+
+* Dispatcher
+* Manager
+* Accountant
+* Super Admin
+
+The system must be mobile responsive because drivers will primarily use mobile browsers.
+
+---
+
+# 3. Brand
+
+Brand name:
+
+**SK Ways Logistics**
+
+Primary tagline:
+
+**The Smarter Way to Move.**
+
+Alternative supporting text:
+
+**Reliable local business deliveries, managed simply.**
+
+The design should feel:
+
+* Professional
+* Trustworthy
+* Modern
+* Clean
+* Logistics-focused
+* B2B-oriented
+
+Avoid a generic template-looking website.
+
+Create a consistent design system with:
+
+* Typography
+* Spacing
+* Buttons
+* Cards
+* Forms
+* Tables
+* Status badges
+* Modals
+* Alerts
+* Empty states
+* Loading states
+* Error states
+
+Use a restrained professional color palette and make the UI accessible.
+
+---
+
+# 4. Application Structure
+
+Create these major sections:
+
+```text
+/
+├── Public Website
+│   ├── /
+│   ├── /services
+│   ├── /about
+│   ├── /contact
+│   ├── /get-a-quote
+│   └── /track
+│
+├── Authentication
+│   ├── /login
+│   ├── /register
+│   ├── /forgot-password
+│   └── /reset-password
+│
+├── Customer Portal
+│   └── /customer
+│       ├── /dashboard
+│       ├── /orders
+│       ├── /orders/[id]
+│       ├── /create-order
+│       ├── /addresses
+│       ├── /invoices
+│       └── /profile
+│
+├── Driver Portal
+│   └── /driver
+│       ├── /dashboard
+│       ├── /orders
+│       ├── /orders/[id]
+│       ├── /earnings
+│       └── /profile
+│
+└── Admin Portal
+    └── /admin
+        ├── /dashboard
+        ├── /orders
+        ├── /orders/[id]
+        ├── /customers
+        ├── /customers/[id]
+        ├── /drivers
+        ├── /drivers/[id]
+        ├── /vehicles
+        ├── /pricing
+        ├── /payments
+        ├── /invoices
+        ├── /reports
+        └── /settings
+```
+
+---
+
+# 5. Public Website
+
+Build a high-quality landing page.
+
+## Homepage
+
+Hero section:
+
+### Headline
+
+**The Smarter Way to Move.**
+
+### Supporting text
+
+**Reliable B2B pickup and delivery services for businesses that need their goods delivered on time.**
+
+Primary CTA:
+
+**Get a Quote**
+
+Secondary CTA:
+
+**Track Shipment**
+
+Include:
+
+* Hero section
+* Services
+* How it works
+* Business benefits
+* Industries served
+* Coverage area
+* CTA
+* Footer
+
+---
+
+# 6. Services
+
+Create service cards for:
+
+### SK Ways Express
+
+Same-day local delivery.
+
+### SK Ways Business
+
+Recurring B2B delivery services.
+
+### SK Ways Cargo
+
+Intercity transportation.
+
+### SK Ways Fleet
+
+Partner vehicle and driver network.
+
+For MVP, clearly mark Cargo and Fleet as:
+
+**Coming Soon**
+
+Do not pretend these services are already operational.
+
+---
+
+# 7. Industries
+
+Create sections for:
+
+* Medical supplies
+* Pharmacies
+* Hospitals
+* Diagnostic laboratories
+* Auto spare parts
+* Electrical suppliers
+* Hardware suppliers
+* E-commerce businesses
+* Retail businesses
+* Small manufacturers
+
+Do not make unsupported claims.
+
+---
+
+# 8. Get a Quote
+
+Create a professional quotation form.
+
+Fields:
+
+```text
+Business Name
+Contact Person
+Phone
+Email
+Pickup Address
+Delivery Address
+Pickup Date
+Package Type
+Weight
+Number of Packages
+Special Instructions
+```
+
+Optional:
+
+```text
+Preferred Vehicle
+Urgency
+Multiple Stops
+```
+
+Validate everything using Zod.
+
+On submission:
+
+1. Validate input.
+2. Save lead/quote request to Supabase.
+3. Generate a unique quote request number.
+4. Show confirmation.
+5. Provide admin access to the request.
+6. Do not automatically promise a price unless pricing rules are configured.
+
+---
+
+# 9. Shipment Tracking
+
+Create:
+
+```text
+/track
+```
+
+Customer enters:
+
+```text
+Tracking Number
+```
+
+Example:
+
+```text
+SKW-2026-000001
+```
+
+Display:
+
+```text
+Shipment
+Pickup
+Destination
+Current Status
+Driver Assigned
+Timeline
+Estimated Delivery
+```
+
+Status timeline:
+
+```text
+REQUESTED
+    ↓
+CONFIRMED
+    ↓
+DRIVER_ASSIGNED
+    ↓
+PICKED_UP
+    ↓
+IN_TRANSIT
+    ↓
+OUT_FOR_DELIVERY
+    ↓
+DELIVERED
+```
+
+Also support:
+
+```text
+CANCELLED
+FAILED
+RETURNED
+```
+
+---
+
+# 10. Authentication
+
+Use Supabase Auth.
+
+Support:
+
+* Email/password
+* Password reset
+* Email verification
+
+Design authentication so additional authentication methods can be added later.
+
+After login:
+
+```text
+ADMIN → /admin/dashboard
+
+DRIVER → /driver/dashboard
+
+CUSTOMER → /customer/dashboard
+```
+
+Never determine permissions only from frontend state.
+
+Authorization must be enforced server-side and through Supabase RLS.
+
+---
+
+# 11. User Roles
+
+Create a profiles table.
+
+Example:
+
+```text
+profiles
+---------
+id
+user_id
+role
+full_name
+phone
+email
+avatar_url
+status
+created_at
+updated_at
+```
+
+Roles:
+
+```text
+CUSTOMER
+DRIVER
+ADMIN
+```
+
+Use enums where appropriate.
+
+---
+
+# 12. Customer Management
+
+Admin must be able to:
+
+* Create customer
+* View customers
+* Search customers
+* Filter customers
+* Edit customer
+* Activate/deactivate customer
+* View customer orders
+* View customer payment history
+* View customer invoices
+
+Customer fields:
+
+```text
+Company Name
+Contact Person
+Phone
+Email
+GST Number
+Billing Address
+Status
+Notes
+```
+
+GST should be optional.
+
+---
+
+# 13. Driver Management
+
+Admin must be able to:
+
+* Add driver
+* Edit driver
+* Activate/deactivate driver
+* View driver
+* Assign vehicle
+* View assigned orders
+* View earnings
+* View delivery performance
+
+Driver fields:
+
+```text
+Name
+Phone
+Email
+License Number
+License Expiry
+Address
+Emergency Contact
+Status
+```
+
+Do not store unnecessary sensitive information.
+
+---
+
+# 14. Vehicle Management
+
+Vehicle fields:
+
+```text
+Vehicle Number
+Vehicle Type
+Make
+Model
+Capacity KG
+Driver
+Insurance Expiry
+Permit Expiry
+Fitness Expiry
+Status
+```
+
+Vehicle types:
+
+```text
+BIKE
+AUTO
+MINI_TRUCK
+LCV
+TRUCK
+OTHER
+```
+
+The system must support both:
+
+```text
+OWNED
+PARTNER
+```
+
+vehicle ownership models.
+
+---
+
+# 15. Orders
+
+Create the core `orders` system.
+
+Order fields:
+
+```text
+id
+order_number
+tracking_number
+customer_id
+driver_id
+vehicle_id
+pickup_address_id
+delivery_address_id
+package_type
+weight_kg
+number_of_packages
+distance_km
+price
+status
+scheduled_pickup_at
+picked_up_at
+delivered_at
+special_instructions
+created_at
+updated_at
+```
+
+Generate:
+
+```text
+Order Number
+Tracking Number
+```
+
+automatically.
+
+Tracking number format:
+
+```text
+SKW-YYYY-XXXXXX
+```
+
+---
+
+# 16. Order Status History
+
+Create:
+
+```text
+order_status_history
+```
+
+Fields:
+
+```text
+id
+order_id
+status
+changed_by
+notes
+latitude
+longitude
+created_at
+```
+
+Every status change must create a history record.
+
+Never overwrite history.
+
+---
+
+# 17. Driver Workflow
+
+Driver dashboard should show:
+
+```text
+Today's Deliveries
+Pending
+In Transit
+Completed
+Earnings
+```
+
+Driver order workflow:
+
+```text
+Assigned
+    ↓
+Accept
+    ↓
+Navigate to Pickup
+    ↓
+Pickup OTP
+    ↓
+Picked Up
+    ↓
+Navigate to Delivery
+    ↓
+Delivery OTP
+    ↓
+Delivered
+```
+
+Allow driver to upload proof of delivery.
+
+Proof can include:
+
+* Photo
+* Signature
+* Delivery notes
+
+Use Supabase Storage for files.
+
+---
+
+# 18. OTP
+
+Create OTP functionality for:
+
+### Pickup
+
+Customer/authorized person provides OTP.
+
+### Delivery
+
+Receiver provides OTP.
+
+Do not store raw OTP permanently.
+
+Store only securely generated/hashed information as appropriate.
+
+Implement:
+
+* OTP generation
+* Expiration
+* Retry limit
+* Verification
+* Used state
+
+Do not expose OTP values through client-side code or logs.
+
+---
+
+# 19. Customer Dashboard
+
+Customer dashboard should show:
+
+```text
+Total Orders
+Active Deliveries
+Completed Deliveries
+Pending Payments
+```
+
+Recent orders table:
+
+```text
+Tracking Number
+Pickup
+Delivery
+Status
+Price
+Date
+Action
+```
+
+Customer can:
+
+* Create order
+* View order
+* Track shipment
+* View history
+* Download invoices
+* Manage profile
+
+Customers must only see their own records.
+
+---
+
+# 20. Admin Dashboard
+
+Create a professional admin dashboard.
+
+Cards:
+
+```text
+Today's Orders
+Active Deliveries
+Completed Today
+Pending Assignments
+Revenue
+Outstanding Payments
+```
+
+Charts:
+
+```text
+Orders by Day
+Revenue by Day
+Orders by Status
+Top Customers
+```
+
+Tables:
+
+```text
+Recent Orders
+Pending Driver Assignments
+Recent Customers
+Recent Payments
+```
+
+Use realistic empty states.
+
+Do not use fake data in production.
+
+During development, seed sample data separately.
+
+---
+
+# 21. Dispatch Management
+
+Admin should be able to:
+
+1. View unassigned orders.
+2. View available drivers.
+3. View vehicle information.
+4. Assign driver.
+5. Assign vehicle.
+6. Reassign delivery.
+7. See assignment history.
+
+Prevent assignment to inactive drivers.
+
+Prevent assignment to unavailable vehicles.
+
+---
+
+# 22. Pricing Engine
+
+Create a configurable pricing system.
+
+Do not hard-code prices throughout the frontend.
+
+Create:
+
+```text
+pricing_rules
+```
+
+Possible fields:
+
+```text
+name
+vehicle_type
+base_fare
+per_km_rate
+per_kg_rate
+waiting_charge
+extra_stop_charge
+minimum_fare
+active
+```
+
+Pricing calculation should be centralized in one service.
+
+Example:
+
+```text
+Total =
+Base Fare
++ Distance Charge
++ Weight Charge
++ Waiting Charge
++ Additional Stop Charge
+```
+
+Allow admin to configure rates.
+
+---
+
+# 23. Payments
+
+Create payment records.
+
+Fields:
+
+```text
+id
+order_id
+customer_id
+amount
+payment_method
+payment_status
+transaction_reference
+paid_at
+created_at
+```
+
+Statuses:
+
+```text
+PENDING
+PAID
+PARTIAL
+FAILED
+REFUNDED
+```
+
+Payment methods:
+
+```text
+CASH
+UPI
+BANK_TRANSFER
+CARD
+OTHER
+```
+
+For MVP, payment recording can be manual.
+
+Design the architecture so Razorpay/Stripe can be integrated later.
+
+---
+
+# 24. Invoices
+
+Create invoice functionality.
+
+Invoice fields:
+
+```text
+invoice_number
+customer_id
+order_id
+subtotal
+tax
+discount
+total
+status
+issued_at
+due_at
+paid_at
+```
+
+Support:
+
+* Invoice list
+* Invoice details
+* Print invoice
+* PDF generation if practical
+
+Don't implement complex accounting functionality in the MVP.
+
+---
+
+# 25. Reports
+
+Admin reports:
+
+### Orders Report
+
+Filters:
+
+```text
+Date
+Customer
+Driver
+Status
+Vehicle
+```
+
+### Revenue Report
+
+Show:
+
+```text
+Revenue
+Paid
+Pending
+```
+
+### Driver Performance
+
+Show:
+
+```text
+Driver
+Assigned
+Completed
+Failed
+Average completion
+```
+
+### Customer Report
+
+Show:
+
+```text
+Customer
+Orders
+Revenue
+Outstanding
+```
+
+Allow CSV export.
+
+---
+
+# 26. Addresses
+
+Create reusable customer addresses.
+
+Fields:
+
+```text
+id
+customer_id
+label
+contact_name
+phone
+address_line_1
+address_line_2
+city
+state
+postal_code
+latitude
+longitude
+```
+
+Examples:
+
+```text
+Warehouse
+Office
+Hospital
+Pharmacy
+Store
+```
+
+---
+
+# 27. Lead Management
+
+Create:
+
+```text
+leads
+```
+
+For website enquiries.
+
+Fields:
+
+```text
+id
+business_name
+contact_name
+phone
+email
+service
+message
+status
+source
+created_at
+```
+
+Lead statuses:
+
+```text
+NEW
+CONTACTED
+QUOTED
+CONVERTED
+LOST
+```
+
+Admin should be able to manage leads.
+
+---
+
+# 28. Database Design
+
+Create proper foreign keys.
+
+Use:
+
+* UUID primary keys
+* PostgreSQL enums where appropriate
+* timestamps
+* indexes
+* foreign key constraints
+* unique constraints
+
+Important indexes:
+
+```text
+orders.customer_id
+orders.driver_id
+orders.status
+orders.tracking_number
+orders.order_number
+orders.created_at
+order_status_history.order_id
+payments.customer_id
+payments.status
+```
+
+Avoid unnecessary indexes.
+
+---
+
+# 29. Supabase RLS
+
+RLS is mandatory.
+
+Examples:
+
+### Customer
+
+Customer can:
+
+```text
+SELECT own profile
+SELECT own orders
+SELECT own order history
+SELECT own invoices
+SELECT own payments
+```
+
+Customer cannot:
+
+```text
+SELECT another customer's orders
+UPDATE another customer's order
+SELECT drivers
+SELECT admin data
+```
+
+### Driver
+
+Driver can:
+
+```text
+SELECT own profile
+SELECT assigned orders
+UPDATE allowed delivery status
+INSERT delivery proof
+```
+
+Driver cannot:
+
+```text
+View unrelated customer data
+View all orders
+Change pricing
+Change payment records
+Manage drivers
+```
+
+### Admin
+
+Admin can manage operational records.
+
+Never bypass RLS simply because the UI hides something.
+
+---
+
+# 30. Security
+
+Follow these rules:
+
+* Never expose Supabase service-role key to the browser.
+* Use environment variables.
+* Validate all user input.
+* Use server-side authorization.
+* Implement RLS.
+* Sanitize user-generated content.
+* Validate file uploads.
+* Restrict file types and sizes.
+* Never log passwords or OTPs.
+* Do not expose private storage buckets publicly.
+* Use signed URLs when appropriate.
+* Protect admin routes.
+* Add rate limiting where practical.
+* Avoid exposing unnecessary database fields.
+
+---
+
+# 31. API / Server Architecture
+
+Keep business logic separate from UI.
+
+Suggested structure:
+
+```text
+src/
+├── app/
+├── components/
+├── features/
+│   ├── auth/
+│   ├── customers/
+│   ├── drivers/
+│   ├── vehicles/
+│   ├── orders/
+│   ├── payments/
+│   ├── invoices/
+│   └── reports/
+├── lib/
+│   ├── supabase/
+│   ├── auth/
+│   ├── validations/
+│   ├── pricing/
+│   ├── permissions/
+│   └── utils/
+├── server/
+│   ├── customers/
+│   ├── drivers/
+│   ├── orders/
+│   ├── payments/
+│   └── reports/
+└── types/
+```
+
+Do not put all business logic inside React components.
+
+---
+
+# 32. Error Handling
+
+Every important operation must handle:
+
+```text
+Loading
+Success
+Validation Error
+Unauthorized
+Forbidden
+Not Found
+Database Error
+Network Error
+```
+
+Create consistent error messages.
+
+Do not expose raw database errors to customers.
+
+---
+
+# 33. UI Requirements
+
+All pages must be responsive.
+
+Desktop:
+
+```text
+Sidebar
+Header
+Main Content
+```
+
+Mobile:
+
+```text
+Header
+Content
+Bottom/mobile navigation where appropriate
+```
+
+Driver UI should prioritize mobile usability.
+
+Buttons must be large enough for touch interaction.
+
+Tables should become cards or horizontally scrollable layouts on mobile.
+
+---
+
+# 34. SEO
+
+Implement SEO for public pages.
+
+Include:
+
+* Metadata
+* Title
+* Description
+* Open Graph
+* Robots configuration
+* Sitemap
+* Semantic HTML
+
+Important keywords should naturally target:
+
+```text
+B2B logistics
+local delivery
+same day delivery
+business delivery
+logistics company
+Bengaluru delivery
+Bengaluru logistics
+```
+
+Do not keyword stuff.
+
+---
+
+# 35. Performance
+
+Optimize for Vercel.
+
+Requirements:
+
+* Server components by default
+* Image optimization
+* Lazy loading where appropriate
+* Avoid unnecessary client-side JavaScript
+* Pagination for large tables
+* Database indexes
+* Efficient queries
+* Avoid N+1 queries
+* Use caching where appropriate
+* Use realtime only where it provides actual value
+
+---
+
+# 36. Notifications
+
+Design notification infrastructure.
+
+Initially support:
+
+* In-app notifications
+* Email where practical
+
+Future:
+
+* WhatsApp
+* SMS
+* Push notifications
+
+Notification examples:
+
+```text
+Order confirmed
+Driver assigned
+Pickup completed
+Out for delivery
+Delivery completed
+Payment received
+Invoice generated
+```
+
+Create a notification abstraction so providers can be added later.
+
+---
+
+# 37. Activity Logs
+
+Create:
+
+```text
+activity_logs
+```
+
+Track important administrative actions.
+
+Fields:
+
+```text
+id
+user_id
+action
+entity_type
+entity_id
+metadata
+created_at
+```
+
+Examples:
+
+```text
+ORDER_CREATED
+DRIVER_ASSIGNED
+DRIVER_REASSIGNED
+ORDER_STATUS_CHANGED
+PAYMENT_RECORDED
+CUSTOMER_UPDATED
+```
+
+---
+
+# 38. Seed Data
+
+Create development seed data.
+
+Include:
+
+```text
+1 admin
+5 drivers
+5 vehicles
+10 customers
+30 orders
+sample payments
+sample invoices
+```
+
+Clearly separate seed/development data from production.
+
+Never insert fake data automatically into production.
+
+---
+
+# 39. Environment Variables
+
+Create `.env.example`.
+
+Include only required variables.
+
+Example:
+
+```text
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+```
+
+Never commit `.env.local`.
+
+Add `.env*` rules to `.gitignore` appropriately.
+
+---
+
+# 40. Vercel Deployment
+
+The project must be deployable to Vercel.
+
+Provide:
+
+1. Local development instructions.
+2. Supabase setup instructions.
+3. Database migration instructions.
+4. Environment variable setup.
+5. Build command.
+6. Production deployment instructions.
+
+Make sure:
+
+```text
+npm run lint
+npm run build
+```
+
+work successfully.
+
+---
+
+# 41. Testing
+
+Add tests for critical business logic.
+
+At minimum test:
+
+### Pricing
+
+```text
+Base fare
+Distance fare
+Weight fare
+Minimum fare
+Additional stop
+```
+
+### Permissions
+
+```text
+Customer cannot access another customer's order.
+Driver cannot access unassigned orders.
+Admin can access operational records.
+```
+
+### Order status
+
+Prevent invalid transitions.
+
+Example:
+
+```text
+REQUESTED → CONFIRMED
+CONFIRMED → DRIVER_ASSIGNED
+DRIVER_ASSIGNED → PICKED_UP
+PICKED_UP → IN_TRANSIT
+IN_TRANSIT → OUT_FOR_DELIVERY
+OUT_FOR_DELIVERY → DELIVERED
+```
+
+Do not allow:
+
+```text
+DELIVERED → PICKED_UP
+```
+
+without an explicit admin correction process.
+
+---
+
+# 42. Order State Machine
+
+Centralize status transition rules.
+
+Create a function/service such as:
+
+```text
+canTransitionOrderStatus(
+    currentStatus,
+    nextStatus,
+    actorRole
+)
+```
+
+This logic must not be duplicated throughout the application.
+
+---
+
+# 43. Future Scalability
+
+Design the database and code so SK Ways can later support:
+
+### Phase 2
+
+Intercity transport.
+
+### Phase 3
+
+Cargo.
+
+### Phase 4
+
+Warehousing.
+
+### Phase 5
+
+3PL.
+
+### Phase 6
+
+SK Ways Tech — logistics SaaS platform.
+
+Do not over-engineer these features now.
+
+Create clean extension points instead.
+
+---
+
+# 44. Important MVP Rule
+
+Do NOT build unnecessary features simply because they appear in this specification.
+
+Prioritize:
+
+### P0 — Must Have
+
+```text
+Authentication
+Customers
+Drivers
+Vehicles
+Orders
+Order assignment
+Order status
+Tracking
+Pricing
+Admin dashboard
+Customer dashboard
+Driver dashboard
+RLS
+```
+
+### P1 — Should Have
+
+```text
+Payments
+Invoices
+Reports
+Proof of delivery
+OTP
+Notifications
+Leads
+```
+
+### P2 — Later
+
+```text
+Live GPS
+Route optimization
+AI dispatch
+WhatsApp automation
+Advanced analytics
+Multi-city
+Warehousing
+Fleet optimization
+Driver payout automation
+```
+
+---
+
+# 45. Live GPS
+
+Do not implement continuous GPS tracking in the first version.
+
+Instead, design the order model so GPS can be added later.
+
+Later architecture:
+
+```text
+Driver Mobile
+      ↓
+GPS Location
+      ↓
+Realtime / Location Service
+      ↓
+Supabase
+      ↓
+Customer Tracking Map
+```
+
+For MVP, tracking should be status-based.
+
+---
+
+# 46. Dashboard Design
+
+Admin dashboard should feel like a real logistics operations center.
+
+Use:
+
+* Summary cards
+* Charts
+* Filters
+* Status badges
+* Quick actions
+* Recent orders
+* Pending assignments
+* Revenue summary
+
+Avoid excessive animations.
+
+Focus on usability.
+
+---
+
+# 47. Empty States
+
+Every page must have useful empty states.
+
+Example:
+
+```text
+No deliveries yet
+
+Once customers create deliveries,
+they will appear here.
+```
+
+Provide relevant CTA.
+
+---
+
+# 48. Loading States
+
+Use skeleton loaders for:
+
+* Dashboard
+* Tables
+* Order details
+* Customer details
+
+Avoid showing blank screens.
+
+---
+
+# 49. Confirmation Dialogs
+
+Use confirmation dialogs for destructive operations:
+
+```text
+Delete
+Deactivate
+Cancel Order
+Reassign Driver
+Refund
+```
+
+Clearly explain consequences.
+
+---
+
+# 50. Auditability
+
+Important changes should be traceable.
+
+For example:
+
+```text
+Order #SKW-2026-000123
+
+Created by Admin
+Driver assigned by Admin
+Picked up by Driver
+Delivered by Driver
+Payment recorded by Admin
+```
+
+---
+
+# 51. Code Quality
+
+Follow these principles:
+
+* TypeScript strict mode.
+* Avoid `any`.
+* Reusable components.
+* Small focused functions.
+* Clear naming.
+* No duplicated business logic.
+* No hard-coded business rules.
+* No secrets in source code.
+* No unnecessary dependencies.
+* Proper error handling.
+* Proper loading states.
+* Proper authorization.
+
+---
+
+# 52. Development Process
+
+Build in phases.
+
+## Phase 1
+
+Set up:
+
+```text
+Next.js
+TypeScript
+Tailwind
+shadcn/ui
+Supabase
+Authentication
+Database
+RLS
+```
+
+## Phase 2
+
+Build:
+
+```text
+Public Website
+Customer
+Driver
+Admin
+```
+
+## Phase 3
+
+Build:
+
+```text
+Orders
+Assignment
+Status
+Tracking
+```
+
+## Phase 4
+
+Build:
+
+```text
+Pricing
+Payments
+Invoices
+Reports
+```
+
+## Phase 5
+
+Testing and security.
+
+## Phase 6
+
+Production deployment.
+
+---
+
+# 53. Before Writing Code
+
+First inspect the entire repository.
+
+Determine:
+
+* Existing files
+* Existing dependencies
+* Existing components
+* Existing configuration
+* Existing environment variables
+* Existing database/migrations
+
+Do NOT blindly overwrite existing work.
+
+If this is a new repository, create the project cleanly.
+
+Before implementing a feature, explain:
+
+1. What you found.
+2. What files you will create/change.
+3. How the feature will work.
+
+Then implement it.
+
+---
+
+# 54. Database Migration Requirement
+
+All database changes must be represented through migration files.
+
+Never rely on manually modifying production tables.
+
+Create migrations for:
+
+```text
+profiles
+customers
+drivers
+vehicles
+addresses
+orders
+order_status_history
+pricing_rules
+payments
+invoices
+leads
+notifications
+activity_logs
+```
+
+Include:
+
+* Foreign keys
+* Indexes
+* Constraints
+* RLS policies
+* Necessary triggers/functions
+
+---
+
+# 55. Final Acceptance Criteria
+
+The application is considered MVP-ready only when:
+
+### Customer
+
+A customer can:
+
+```text
+Register
+Login
+Create delivery
+View delivery
+Track delivery
+View status history
+View invoices
+View payment status
+Update profile
+```
+
+### Driver
+
+A driver can:
+
+```text
+Login
+View assigned deliveries
+Accept delivery
+Update pickup status
+Update transit status
+Update delivery status
+Verify OTP
+Upload proof of delivery
+View completed deliveries
+View earnings
+```
+
+### Admin
+
+Admin can:
+
+```text
+Login
+View dashboard
+Manage customers
+Manage drivers
+Manage vehicles
+View orders
+Create orders
+Assign drivers
+Reassign drivers
+Configure pricing
+Update order status
+Record payments
+Manage invoices
+View reports
+Manage leads
+View activity logs
+```
+
+### Security
+
+Verify:
+
+```text
+RLS enabled
+Customer isolation
+Driver isolation
+Admin authorization
+No service key in browser
+No sensitive data leakage
+```
+
+### Production
+
+Verify:
+
+```text
+npm run lint
+npm run build
+```
+
+Both must pass.
+
+---
+
+# 56. Final Instruction to the Coding Agent
+
+Build this application as a **real production MVP**, not a demo.
+
+Do not create fake buttons or placeholder functionality for P0 features.
+
+If a feature is not implemented, clearly mark it as coming later rather than pretending it works.
+
+Prioritize:
+
+1. Security
+2. Correct database design
+3. Correct authorization
+4. Reliable order workflow
+5. Mobile usability
+6. Clean UX
+7. Maintainable code
+8. Performance
+9. Scalability
+
+Keep the first release simple enough for a ₹1 lakh startup.
+
+The goal is not to build a huge logistics platform immediately.
+
+The goal is to give **SK Ways** a practical system that can operate its first **10–20 B2B customers**, while providing a strong foundation for future growth.
+
+Start by analyzing the repository and creating an implementation plan. Then implement the MVP incrementally, testing each major module before moving to the next.

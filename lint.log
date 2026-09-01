@@ -1,0 +1,53 @@
+
+> sk-ways-logistics@0.1.0 lint
+> next lint
+
+`next lint` is deprecated and will be removed in Next.js 16.
+For new projects, use create-next-app to choose your preferred linter.
+For existing projects, migrate to the ESLint CLI:
+npx @next/codemod@canary next-lint-to-eslint-cli .
+
+
+./src/app/admin/layout.tsx
+5:3  Warning: 'Car' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'IndianRupee' is defined but never used.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'Settings' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/customer/address-form-dialog.tsx
+25:7  Warning: 'inputClasses' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/forms/action-form.tsx
+3:18  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/marketing/quote-form.tsx
+14:3  Warning: 'Form' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/portal/notification-bell.tsx
+28:3  Warning: 'portal' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/portal/portal-shell.tsx
+5:33  Warning: 'LogOut' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/lib/supabase/middleware.ts
+46:13  Warning: 'user' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/server/drivers/actions.ts
+18:11  Warning: 'password' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/server/leads/actions.ts
+68:9  Warning: 'v' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/server/tracking/actions.ts
+3:10  Warning: 'revalidatePath' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/types/database.ts
+575:12  Error: The `{}` ("empty object") type allows any non-nullish value, including literals like `0` and `""`.
+- If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.
+- If you want a type meaning "any object", you probably want `object` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.  @typescript-eslint/no-empty-object-type
+602:21  Error: The `{}` ("empty object") type allows any non-nullish value, including literals like `0` and `""`.
+- If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.
+- If you want a type meaning "any object", you probably want `object` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead.  @typescript-eslint/no-empty-object-type
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules
