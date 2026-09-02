@@ -18,16 +18,23 @@ export function ContactForm() {
     setError(null);
     setMessage(null);
 
-    const formData = new FormData(e.currentTarget);
-    const result = await submitContactForm(formData);
-    setBusy(false);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
 
-    if (!result.ok) {
-      setError(result.error);
-      return;
+    try {
+      const result = await submitContactForm(formData);
+      if (!result.ok) {
+        setError(result.error);
+        return;
+      }
+      setMessage("Thanks for reaching out. We will get back to you within one business day.");
+      form.reset();
+    } catch (err) {
+      console.error("[ContactForm] submit failed:", err);
+      setError("Something went wrong. Please try again in a moment.");
+    } finally {
+      setBusy(false);
     }
-    setMessage("Thanks for reaching out. We will get back to you within one business day.");
-    e.currentTarget.reset();
   }
 
   return (

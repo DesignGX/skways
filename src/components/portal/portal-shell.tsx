@@ -2,20 +2,61 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Menu, type LucideIcon } from "lucide-react";
+import {
+  Activity,
+  ClipboardList,
+  FileText,
+  Gauge,
+  Inbox,
+  LayoutDashboard,
+  MapPin,
+  Menu,
+  Package,
+  PlusCircle,
+  Tag,
+  Truck,
+  User,
+  Users,
+  Wallet,
+  type LucideIcon,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { UserMenu } from "@/components/portal/user-menu";
 import { NotificationBell } from "@/components/portal/notification-bell";
 
+/** Serializable icon name -> Lucide component (resolved inside this client component). */
+const ICONS: Record<string, LucideIcon> = {
+  activity: Activity,
+  "clipboard-list": ClipboardList,
+  "file-text": FileText,
+  gauge: Gauge,
+  inbox: Inbox,
+  dashboard: LayoutDashboard,
+  "map-pin": MapPin,
+  package: Package,
+  "plus-circle": PlusCircle,
+  tag: Tag,
+  truck: Truck,
+  user: User,
+  users: Users,
+  wallet: Wallet,
+};
+
 export type PortalNavItem = {
   href: string;
   label: string;
-  icon: LucideIcon;
+  /** Key into the ICONS map above — plain string so it can cross the RSC boundary. */
+  icon: keyof typeof ICONS | string;
   /** Path prefixes (e.g. ["/admin/orders"] matches /admin/orders/[id]). */
   match: string[];
 };
+
+function NavIcon({ name, className }: { name: string; className?: string }) {
+  const Icon = ICONS[name] ?? LayoutDashboard;
+  return <Icon className={className} />;
+}
 
 export function PortalShell({
   portal,
@@ -60,7 +101,7 @@ export function PortalShell({
                 : "text-muted-foreground hover:bg-accent hover:text-foreground"
             )}
           >
-            <item.icon className="h-4 w-4 shrink-0" />
+            <NavIcon name={item.icon} className="h-4 w-4 shrink-0" />
             {item.label}
           </Link>
         ))}

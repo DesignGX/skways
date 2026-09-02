@@ -168,7 +168,10 @@ export const pricingRuleSchema = z.object({
   waitingCharge: z.coerce.number().min(0).default(0),
   extraStopCharge: z.coerce.number().min(0).default(0),
   minimumFare: z.coerce.number().min(0).default(0),
-  active: z.boolean().default(true),
+  active: z.preprocess(
+    (v) => v === "true" || v === "1" || v === "on",
+    z.boolean()
+  ).default(true),
 });
 
 /** Payment recording. */

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { createAddress, updateAddress } from "@/server/addresses/actions";
@@ -55,7 +55,7 @@ export function AddressFormDialog({
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="space-y-1.5">
               <Label>Label</Label>
-              <Input name="label" defaultValue={address?.label} placeholder="Warehouse, Office…" required />
+              <Input name="label" defaultValue={address?.label ?? ""} placeholder="Warehouse, Office…" required />
             </div>
             <div className="space-y-1.5">
               <Label>Contact name</Label>
@@ -71,7 +71,7 @@ export function AddressFormDialog({
             </div>
             <div className="sm:col-span-2 space-y-1.5">
               <Label>Address line 1</Label>
-              <Input name="addressLine1" defaultValue={address?.address_line_1} required />
+              <Input name="addressLine1" defaultValue={address?.address_line_1 ?? ""} required />
             </div>
             <div className="sm:col-span-2 space-y-1.5">
               <Label>Address line 2</Label>
@@ -79,11 +79,11 @@ export function AddressFormDialog({
             </div>
             <div className="space-y-1.5">
               <Label>City</Label>
-              <Input name="city" defaultValue={address?.city} required />
+              <Input name="city" defaultValue={address?.city ?? ""} required />
             </div>
             <div className="space-y-1.5">
               <Label>State</Label>
-              <Input name="state" defaultValue={address?.state} required />
+              <Input name="state" defaultValue={address?.state ?? ""} required />
             </div>
           </div>
           <Button type="button" variant="outline" onClick={() => setOpen(false)} className="ml-2">

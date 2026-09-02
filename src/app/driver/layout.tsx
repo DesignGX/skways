@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import { LayoutDashboard, Package, User, Wallet } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { getCurrentSessionUser } from "@/lib/auth/session";
 import { PortalShell, type PortalNavItem } from "@/components/portal/portal-shell";
@@ -7,10 +6,11 @@ import { PortalShell, type PortalNavItem } from "@/components/portal/portal-shel
 export const metadata = { title: "Driver portal" };
 
 const nav: PortalNavItem[] = [
-  { href: "/driver/dashboard", label: "Dashboard", icon: LayoutDashboard, match: ["/driver/dashboard"] },
-  { href: "/driver/orders", label: "Deliveries", icon: Package, match: ["/driver/orders"] },
-  { href: "/driver/earnings", label: "Earnings", icon: Wallet, match: ["/driver/earnings"] },
-  { href: "/driver/profile", label: "Profile", icon: User, match: ["/driver/profile"] },
+  { href: "/driver/dashboard", label: "Dashboard", icon: "dashboard", match: ["/driver/dashboard"] },
+  { href: "/driver/orders", label: "Deliveries", icon: "package", match: ["/driver/orders"] },
+  { href: "/driver/earnings", label: "Earnings", icon: "wallet", match: ["/driver/earnings"] },
+  { href: "/driver/vehicle", label: "My vehicle", icon: "truck", match: ["/driver/vehicle"] },
+  { href: "/driver/profile", label: "Profile", icon: "user", match: ["/driver/profile"] },
 ];
 
 export default async function DriverLayout({

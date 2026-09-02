@@ -27,13 +27,19 @@ export function TrackForm() {
     setBusy(true);
     setError(null);
     setResult(null);
-    const res = await trackShipment(value);
-    setBusy(false);
-    if (!res.ok) {
-      setError(res.error);
-      return;
+    try {
+      const res = await trackShipment(value);
+      if (!res.ok) {
+        setError(res.error);
+        return;
+      }
+      setResult(res.data);
+    } catch (err) {
+      console.error("[TrackForm] submit failed:", err);
+      setError("Something went wrong. Please try again in a moment.");
+    } finally {
+      setBusy(false);
     }
-    setResult(res.data);
   }
 
   const currentIndex = result ? TRACKING_TIMELINE.indexOf(result.status as OrderStatus) : -1;

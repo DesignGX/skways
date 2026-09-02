@@ -1,0 +1,65 @@
+
+> sk-ways-logistics@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.25
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 21.5s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/13) ...
+   Generating static pages (3/13) 
+   Generating static pages (6/13) 
+   Generating static pages (9/13) 
+ ✓ Generating static pages (13/13)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                      186 B         106 kB
+├ ○ /_not-found                            997 B         104 kB
+├ ○ /about                                 186 B         106 kB
+├ ƒ /admin/customers                     5.41 kB         141 kB
+├ ƒ /admin/dashboard                       175 B         106 kB
+├ ƒ /admin/drivers                        5.4 kB         141 kB
+├ ƒ /admin/invoices                      5.17 kB         141 kB
+├ ƒ /admin/leads                         3.02 kB         126 kB
+├ ƒ /admin/orders                          186 B         106 kB
+├ ƒ /admin/orders/[id]                   7.46 kB         143 kB
+├ ƒ /admin/payments                      5.32 kB         141 kB
+├ ƒ /admin/pricing                       7.53 kB         143 kB
+├ ƒ /admin/reports                         186 B         106 kB
+├ ƒ /admin/settings                        186 B         106 kB
+├ ƒ /admin/vehicles                      5.48 kB         141 kB
+├ ○ /contact                             2.86 kB         113 kB
+├ ƒ /customer/addresses                  5.17 kB         137 kB
+├ ƒ /customer/create-order                4.7 kB         125 kB
+├ ƒ /customer/dashboard                  3.12 kB         216 kB
+├ ƒ /customer/invoices                     136 B         103 kB
+├ ƒ /customer/orders                       175 B         106 kB
+├ ƒ /customer/orders/[id]                2.75 kB         117 kB
+├ ƒ /customer/profile                     3.8 kB         124 kB
+├ ƒ /driver/dashboard                      175 B         106 kB
+├ ƒ /driver/earnings                       136 B         103 kB
+├ ƒ /driver/orders                         186 B         106 kB
+├ ƒ /driver/orders/[id]                  5.92 kB         129 kB
+├ ƒ /driver/profile                      1.28 kB         112 kB
+├ ƒ /driver/vehicle                        136 B         103 kB
+├ ○ /forgot-password                     4.99 kB         144 kB
+├ ○ /get-a-quote                         3.57 kB         114 kB
+├ ƒ /login                               5.05 kB         144 kB
+├ ƒ /register                            5.23 kB         145 kB
+├ ○ /reset-password                      4.76 kB         213 kB
+├ ○ /services                              186 B         106 kB
+└ ○ /track                               4.44 kB         115 kB
++ First Load JS shared by all             103 kB
+  ├ chunks/1255-7316b50163a428e6.js      46.4 kB
+  ├ chunks/4bd1b696-f785427dddbba9fb.js  54.2 kB
+  └ other shared chunks (total)             2 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

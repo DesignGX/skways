@@ -1,13 +1,5 @@
 ﻿import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import {
-  FileText,
-  LayoutDashboard,
-  MapPin,
-  Package,
-  PlusCircle,
-  User,
-} from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { getCurrentSessionUser } from "@/lib/auth/session";
 import { PortalShell, type PortalNavItem } from "@/components/portal/portal-shell";
@@ -15,12 +7,12 @@ import { PortalShell, type PortalNavItem } from "@/components/portal/portal-shel
 export const metadata: Metadata = { title: "Customer portal" };
 
 const nav: PortalNavItem[] = [
-  { href: "/customer/dashboard", label: "Dashboard", icon: LayoutDashboard, match: ["/customer/dashboard"] },
-  { href: "/customer/orders", label: "My orders", icon: Package, match: ["/customer/orders"] },
-  { href: "/customer/create-order", label: "Create order", icon: PlusCircle, match: ["/customer/create-order"] },
-  { href: "/customer/addresses", label: "Addresses", icon: MapPin, match: ["/customer/addresses"] },
-  { href: "/customer/invoices", label: "Invoices", icon: FileText, match: ["/customer/invoices"] },
-  { href: "/customer/profile", label: "Profile", icon: User, match: ["/customer/profile"] },
+  { href: "/customer/dashboard", label: "Dashboard", icon: "dashboard", match: ["/customer/dashboard"] },
+  { href: "/customer/orders", label: "My orders", icon: "package", match: ["/customer/orders"] },
+  { href: "/customer/create-order", label: "Create order", icon: "plus-circle", match: ["/customer/create-order"] },
+  { href: "/customer/addresses", label: "Addresses", icon: "map-pin", match: ["/customer/addresses"] },
+  { href: "/customer/invoices", label: "Invoices", icon: "file-text", match: ["/customer/invoices"] },
+  { href: "/customer/profile", label: "Profile", icon: "user", match: ["/customer/profile"] },
 ];
 
 export default async function CustomerLayout({

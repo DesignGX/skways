@@ -1,0 +1,264 @@
+
+> sk-ways-logistics@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.25
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.1.62:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 2.5s
+ ○ Compiling /get-a-quote ...
+ ✓ Compiled /get-a-quote in 8.4s (867 modules)
+ GET /get-a-quote 200 in 10015ms
+ GET /get-a-quote 200 in 334ms
+ GET /get-a-quote 200 in 395ms
+ GET /get-a-quote 200 in 73ms
+ ○ Compiling /track ...
+ ✓ Compiled /track in 1620ms (891 modules)
+ GET /track 200 in 1911ms
+ GET /track 200 in 120ms
+ ○ Compiling /services ...
+ ✓ Compiled /services in 580ms (887 modules)
+ GET /services 200 in 783ms
+ GET /get-a-quote 200 in 85ms
+ ✓ Compiled in 1811ms (901 modules)
+ GET /get-a-quote 200 in 438ms
+ ⨯ ./src/components/marketing/quote-form.tsx
+Error: 
+
+Caused by:
+    0: Failed to read source code from P:\skways\src\components\marketing\quote-form.tsx
+    1: The system cannot find the file specified. (os error 2)
+
+Import trace for requested module:
+./src/components/marketing/quote-form.tsx
+./src/app/(marketing)/get-a-quote/page.tsx
+ ○ Compiling /_error ...
+ ⨯ ./src/components/marketing/quote-form.tsx
+Error: 
+
+Caused by:
+    0: Failed to read source code from P:\skways\src\components\marketing\quote-form.tsx
+    1: The system cannot find the file specified. (os error 2)
+
+Import trace for requested module:
+./src/components/marketing/quote-form.tsx
+./src/app/(marketing)/get-a-quote/page.tsx
+ GET /get-a-quote 500 in 8537ms
+ GET /get-a-quote 500 in 47ms
+ GET /get-a-quote 500 in 50ms
+ GET /get-a-quote 500 in 47ms
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ⨯ ./src/components/marketing/quote-form.tsx
+Error:   [31mx[0m Unexpected eof
+    ,-[[36;1;4mP:\skways\src\components\marketing\quote-form.tsx[0m:64:21]
+ [2m62[0m |               <label htmlFor="q-email" className="text-sm font-medium">Email</label>
+ [2m63[0m |               <Input id="q-email" name="email" type="email" placeholder="you@company.com" />
+ [2m64[0m |             </div>
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/marketing/quote-form.tsx
+./src/app/(marketing)/get-a-quote/page.tsx
+ GET /get-a-quote 500 in 279ms
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ✓ Compiled /_error in 2.2s (1210 modules)
+ GET /get-a-quote 200 in 1698ms
+ GET /get-a-quote 200 in 234ms
+ ⨯ Error: Could not find the module "P:\skways\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '2686638419'
+}
+ ⨯ Error: Could not find the module "P:\skways\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '1880012284'
+}
+ ⨯ Error: Could not find the module "P:\skways\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '1880012284'
+}
+ ⨯ Error: Could not find the module "P:\skways\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '1880012284'
+}
+ ⨯ Error: Could not find the module "P:\skways\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '2686638419'
+}
+ ⨯ Error: Could not find the module "P:\skways\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '1880012284'
+}
+ ⨯ Error: Could not find the module "P:\skways\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '1880012284'
+}
+ ⨯ Error: Could not find the module "P:\skways\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '2686638419'
+}
+ ⨯ Error: Could not find the module "P:\skways\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '2686638419'
+}
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function] {
+  digest: '1171210484'
+}
+ ⨯ Error: Could not find the module "P:\skways\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '2686638419'
+}
+[TypeError: __webpack_modules__[moduleId] is not a function]
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function]
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function] {
+  page: '/get-a-quote'
+}
+ ⨯ Error: Cannot find module './5611.js'
+Require stack:
+- P:\skways\.next\server\webpack-runtime.js
+- P:\skways\.next\server\app\(marketing)\get-a-quote\page.js
+- P:\skways\node_modules\next\dist\server\require.js
+- P:\skways\node_modules\next\dist\server\load-components.js
+- P:\skways\node_modules\next\dist\build\utils.js
+- P:\skways\node_modules\next\dist\build\swc\options.js
+- P:\skways\node_modules\next\dist\build\swc\index.js
+- P:\skways\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- P:\skways\node_modules\next\dist\server\config.js
+- P:\skways\node_modules\next\dist\server\next.js
+- P:\skways\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (P:\skways\.next\server\pages\_document.js:1:327)
+    at Object.<anonymous> (P:\skways\.next\server\pages\_document.js:1:374) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+[TypeError: __webpack_modules__[moduleId] is not a function] {
+  page: '/get-a-quote'
+}
+ ⨯ Error: Cannot find module './5611.js'
+Require stack:
+- P:\skways\.next\server\webpack-runtime.js
+- P:\skways\.next\server\app\(marketing)\get-a-quote\page.js
+- P:\skways\node_modules\next\dist\server\require.js
+- P:\skways\node_modules\next\dist\server\load-components.js
+- P:\skways\node_modules\next\dist\build\utils.js
+- P:\skways\node_modules\next\dist\build\swc\options.js
+- P:\skways\node_modules\next\dist\build\swc\index.js
+- P:\skways\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- P:\skways\node_modules\next\dist\server\config.js
+- P:\skways\node_modules\next\dist\server\next.js
+- P:\skways\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (P:\skways\.next\server\pages\_document.js:1:327)
+    at Object.<anonymous> (P:\skways\.next\server\pages\_document.js:1:374) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading '/_app')]
+[TypeError: Cannot read properties of undefined (reading '/_app')]
+ GET /get-a-quote 500 in 5228ms
+ GET /get-a-quote 500 in 89ms
+ ⨯ Error: Could not find the module "P:\skways\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '2686638419'
+}
+ ⨯ Error: Could not find the module "P:\skways\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '1880012284'
+}
+ ⨯ Error: Could not find the module "P:\skways\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '1880012284'
+}
+ ⨯ Error: Could not find the module "P:\skways\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '1880012284'
+}
+ ⨯ Error: Could not find the module "P:\skways\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '2686638419'
+}
+ ⨯ Error: Could not find the module "P:\skways\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '1880012284'
+}
+ ⨯ Error: Could not find the module "P:\skways\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '1880012284'
+}
+ ⨯ Error: Could not find the module "P:\skways\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '2686638419'
+}
+ ⨯ Error: Could not find the module "P:\skways\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '2686638419'
+}
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function] {
+  digest: '1171210484'
+}
+ ⨯ Error: Could not find the module "P:\skways\node_modules\next\dist\next-devtools\userspace\app\segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '2686638419'
+}
+[TypeError: __webpack_modules__[moduleId] is not a function]
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function]
+ ⨯ [TypeError: __webpack_modules__[moduleId] is not a function] {
+  page: '/get-a-quote'
+}
+ GET /get-a-quote 500 in 3632ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1045ms (1215 modules)
+ GET /get-a-quote 404 in 1347ms
+ GET /get-a-quote 200 in 585ms
+ GET /get-a-quote 200 in 288ms
+ ✓ Compiled in 437ms (422 modules)
+ ✓ Compiled in 328ms (422 modules)
+ ✓ Compiled in 294ms (422 modules)
+ ✓ Compiled in 263ms (422 modules)
+ ✓ Compiled in 259ms (422 modules)
+ ✓ Compiled in 257ms (422 modules)
+ ✓ Compiled in 275ms (422 modules)
+ ✓ Compiled in 250ms (422 modules)
+ ✓ Compiled in 244ms (422 modules)
+ ✓ Compiled in 229ms (422 modules)
+ ✓ Compiled in 248ms (422 modules)
+ ✓ Compiled in 241ms (422 modules)
+ ✓ Compiled in 231ms (422 modules)
+ ✓ Compiled in 308ms (422 modules)
+ ✓ Compiled in 304ms (422 modules)
+ ✓ Compiled in 360ms (422 modules)
+ ✓ Compiled in 873ms (1114 modules)
+ ✓ Compiled in 551ms (1114 modules)
+ ✓ Compiled in 459ms (1114 modules)
+ ✓ Compiled in 425ms (1114 modules)
+ ✓ Compiled in 460ms (1114 modules)
+ ✓ Compiled in 449ms (1114 modules)
+ ✓ Compiled in 411ms (1114 modules)
+ ✓ Compiled in 427ms (1114 modules)
+ ✓ Compiled in 439ms (1114 modules)
+ ✓ Compiled in 418ms (1114 modules)
+ ✓ Compiled in 403ms (1114 modules)
+ ✓ Compiled in 545ms (1114 modules)
+ ✓ Compiled in 442ms (1114 modules)
+ ✓ Compiled in 805ms (1114 modules)
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename 'P:\skways\.next\cache\webpack\server-development\7.pack.gz_' -> 'P:\skways\.next\cache\webpack\server-development\7.pack.gz'

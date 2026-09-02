@@ -48,12 +48,12 @@ export function SiteFooter() {
         <div>
           <h3 className="mb-3 text-sm font-semibold">Contact</h3>
           <address className="space-y-2 text-sm not-italic text-muted-foreground">
-            <p>Peenya Industrial Area, Bengaluru, Karnataka 560058</p>
+            <p>Karur, Tamilnadu</p>
             <p>
-              <a href="tel:+919845000000" className="hover:text-foreground">+91 98450 00000</a>
+              <a href="tel:+919845000000" className="hover:text-foreground">+91 84288 58296</a>
             </p>
             <p>
-              <a href="mailto:hello@skways.in" className="hover:text-foreground">hello@skways.in</a>
+              <a href="mailto:hello@skways.in" className="hover:text-foreground">selvakumardgx@gmail.com</a>
             </p>
           </address>
         </div>

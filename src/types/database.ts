@@ -1,5 +1,5 @@
 ﻿/**
- * SK Ways Logistics â€” typed Supabase schema.
+ * SK Ways Logistics — typed Supabase schema.
  * Hand-maintained to mirror supabase/migrations/0001_initial.sql.
  */
 

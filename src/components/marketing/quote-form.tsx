@@ -1,72 +1,39 @@
 "use client";
 
-import { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { quoteFormSchema } from "@/lib/validations";
-import { submitQuoteRequest } from "@/server/leads/actions";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
+import { submitQuoteRequestForm, type QuoteFormState } from "@/server/leads/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { SelectField } from "@/components/shared/select-field";
-import {
-  Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription,
-} from "@/components/ui/form";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Card, CardContent } from "@/components/ui/card";
 
-type Values = z.infer<typeof quoteFormSchema>;
+const initialState: QuoteFormState = { ok: false, error: null, quoteNumber: null };
 
 const vehicleOptions = ["Bike", "Auto", "Mini Truck", "LCV", "Truck", "Not sure yet"];
 const serviceOptions = ["SK Ways Express", "SK Ways Business", "Other"];
 
+/** Submit button that shows a pending state via useFormStatus. */
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  return (
+    <Button type="submit" size="lg" className="w-full" disabled={pending}>
+      {pending ? "Submitting..." : "Request a Quote"}
+    </Button>
+  );
+}
+
 export function QuoteForm() {
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const [state, formAction] = useActionState(submitQuoteRequestForm, initialState);
 
-  const form = useForm<Values>({
-    resolver: zodResolver(quoteFormSchema),
-    defaultValues: {
-      businessName: "",
-      contactName: "",
-      phone: "",
-      email: "",
-      pickupAddress: "",
-      deliveryAddress: "",
-      pickupDate: "",
-    },
-  });
-
-  async function onSubmit(values: Values) {
-    setBusy(true);
-    setError(null);
-    setSuccess(null);
-
-    const formData = new FormData();
-    Object.entries(values).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) formData.set(key, String(value));
-    });
-
-    const result = await submitQuoteRequest(formData);
-    setBusy(false);
-    if (!result.ok) {
-      setError(result.error);
-      return;
-    }
-    setSuccess(
-      result.data
-        ? `Request ${result.data.quoteRequestNumber} received. Our team will contact you with a quote.`
-        : "Request received. Our team will contact you."
-    );
-    form.reset();
-  }
-
-  if (success) {
+  if (state.ok && state.quoteNumber !== null) {
     return (
       <Alert>
-        <AlertDescription>{success}</AlertDescription>
+        <AlertDescription>
+          Request {state.quoteNumber ? state.quoteNumber : "received"}. Our team will contact
+          you with a quote.
+        </AlertDescription>
       </Alert>
     );
   }
@@ -74,173 +41,92 @@ export function QuoteForm() {
   return (
     <Card>
       <CardContent className="pt-6">
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-          <Form {...form}>
-            <div className="grid gap-5 sm:grid-cols-2">
-            <FormField
-              control={form.control}
-              name="businessName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Business name *</FormLabel>
-                  <FormControl><Input placeholder="Acme Industries" {...field} /></FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="contactName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Contact person *</FormLabel>
-                  <FormControl><Input placeholder="Full name" {...field} /></FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="phone"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Phone *</FormLabel>
-                  <FormControl><Input type="tel" placeholder="+91 98xxxxxxxx" {...field} /></FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl><Input type="email" placeholder="you@company.com" {...field} /></FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+        <form action={formAction} className="space-y-5">
+          <div className="grid gap-5 sm:grid-cols-2">
+            <div className="space-y-1.5">
+              <label htmlFor="q-business" className="text-sm font-medium">Business name *</label>
+              <Input id="q-business" name="businessName" placeholder="Acme Industries"
+                required minLength={2} />
+            </div>
+            <div className="space-y-1.5">
+              <label htmlFor="q-contact" className="text-sm font-medium">Contact person *</label>
+              <Input id="q-contact" name="contactName" placeholder="Full name"
+                required minLength={2} />
+            </div>
+            <div className="space-y-1.5">
+              <label htmlFor="q-phone" className="text-sm font-medium">Phone *</label>
+              <Input id="q-phone" name="phone" type="tel" placeholder="+91 98765 43210"
+                required pattern="[0-9+\-\s()]{7,15}" />
+            </div>
+            <div className="space-y-1.5">
+              <label htmlFor="q-email" className="text-sm font-medium">Email</label>
+              <Input id="q-email" name="email" type="email" placeholder="you@company.com" />
+            </div>
+
+            <div className="space-y-1.5">
+              <label htmlFor="q-service" className="text-sm font-medium">Service</label>
+              <select id="q-service" name="service" defaultValue=""
+                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+                <option value="">Select a service</option>
+                {serviceOptions.map((o) => <option key={o} value={o}>{o}</option>)}
+              </select>
+            </div>
+            <div className="space-y-1.5">
+              <label htmlFor="q-date" className="text-sm font-medium">Preferred pickup date</label>
+              <Input id="q-date" name="pickupDate" type="date" />
+            </div>
+            <div className="space-y-1.5 sm:col-span-2">
+              <label htmlFor="q-pickup" className="text-sm font-medium">Pickup address *</label>
+              <Input id="q-pickup" name="pickupAddress" placeholder="Full pickup address"
+                required minLength={5} />
+            </div>
+            <div className="space-y-1.5 sm:col-span-2">
+              <label htmlFor="q-delivery" className="text-sm font-medium">Delivery address *</label>
+              <Input id="q-delivery" name="deliveryAddress" placeholder="Full delivery address"
+                required minLength={5} />
+            </div>
+            <div className="space-y-1.5">
+              <label htmlFor="q-package" className="text-sm font-medium">Package type</label>
+              <Input id="q-package" name="packageType" placeholder="Boxes, documents, medicines" />
+            </div>
+            <div className="space-y-1.5">
+              <label htmlFor="q-weight" className="text-sm font-medium">Weight (approx, kg)</label>
+              <Input id="q-weight" name="weight" type="number" min="0" step="0.1" placeholder="10" />
+            </div>
+            <div className="space-y-1.5">
+              <label htmlFor="q-count" className="text-sm font-medium">Number of packages</label>
+              <Input id="q-count" name="number_of_packages" type="number" min="1" placeholder="1" />
+            </div>
+            <div className="space-y-1.5">
+              <label htmlFor="q-vehicle" className="text-sm font-medium">Preferred vehicle</label>
+              <select id="q-vehicle" name="preferredVehicle" defaultValue=""
+                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+                <option value="">Select a vehicle</option>
+                {vehicleOptions.map((o) => <option key={o} value={o}>{o}</option>)}
+              </select>
+            </div>
+            <div className="space-y-1.5 sm:col-span-2">
+              <label htmlFor="q-urgency" className="text-sm font-medium">Urgency</label>
+              <Input id="q-urgency" name="urgency" placeholder="Same day / by 6 PM / flexible" />
+            </div>
           </div>
 
-          <FormField
-            control={form.control}
-            name="pickupAddress"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Pickup address *</FormLabel>
-                <FormControl><Input placeholder="Full address with pincode" {...field} /></FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-<div className="grid gap-5 sm:grid-cols-2">
-            <FormField
-              control={form.control}
-              name="pickupDate"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Pickup date</FormLabel>
-                  <FormControl><Input type="date" {...field} /></FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="service"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Service</FormLabel>
-                  <SelectField value={field.value ?? ""} onChange={field.onChange} options={serviceOptions} placeholder="Select a service" />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="packageType"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Package type</FormLabel>
-                  <FormControl><Input placeholder="Boxes, documents, medicines…" {...field} /></FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="weight"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Weight (approx, kg)</FormLabel>
-                  <FormControl><Input type="number" placeholder="10" {...field} /></FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="number_of_packages"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Number of packages</FormLabel>
-                  <FormControl><Input type="number" placeholder="1" {...field} /></FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="preferredVehicle"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Preferred vehicle</FormLabel>
-                  <SelectField value={field.value ?? ""} onChange={field.onChange} options={vehicleOptions} placeholder="Select a vehicle" />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="urgency"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Urgency</FormLabel>
-                  <FormControl><Input placeholder="Same day / by 6 PM / flexible" {...field} /></FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <div className="space-y-1.5">
+            <label htmlFor="q-notes" className="text-sm font-medium">Special instructions</label>
+            <Textarea id="q-notes" name="specialInstructions"
+              placeholder="Handling notes, receiver details, gate access" />
+            <p className="text-sm text-muted-foreground">
+              We never share this information beyond the people handling your delivery.
+            </p>
           </div>
 
-          <FormField
-            control={form.control}
-            name="specialInstructions"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Special instructions</FormLabel>
-                <FormControl>
-                  <Textarea placeholder="Handling notes, receiver details, gate access…" {...field} />
-                </FormControl>
-                <FormDescription>
-                  We never share this information beyond the people handling your delivery.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </Form>
-
-          {error ? (
+          {state.error ? (
             <Alert variant="destructive">
-              <AlertDescription>{error}</AlertDescription>
+              <AlertDescription>{state.error}</AlertDescription>
             </Alert>
           ) : null}
 
-          <Button type="submit" size="lg" className="w-full" disabled={busy}>
-            {busy ? "Submitting…" : "Request a Quote"}
-          </Button>
+          <SubmitButton />
         </form>
       </CardContent>
     </Card>

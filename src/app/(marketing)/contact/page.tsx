@@ -30,9 +30,9 @@ export default function ContactPage() {
           </Card>
           <div className="space-y-4 lg:col-span-2">
             {[
-              { icon: MapPin, title: "Head office", lines: ["Peenya Industrial Area", "Bengaluru, Karnataka 560058"] },
-              { icon: Phone, title: "Phone", lines: ["+91 98450 00000", "Mon–Sat, 8:00–20:00 IST"] },
-              { icon: Mail, title: "Email", lines: ["hello@skways.in", "support@skways.in"] },
+              { icon: MapPin, title: "Head office", lines: ["SKWays", "Karur, Tamilnadu"] },
+              { icon: Phone, title: "Phone", lines: ["+91 84288 58296", "Mon–Sat, 8:00–20:00 IST"] },
+              { icon: Mail, title: "Email", lines: ["selvakumardgx@gmail.com"] },
             ].map((c) => (
               <Card key={c.title}>
                 <CardContent className="flex items-start gap-4 pt-6">

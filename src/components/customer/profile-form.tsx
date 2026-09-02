@@ -20,11 +20,11 @@ export function ProfileForm({ values }: { values: ProfileValues }) {
       <div className="grid gap-3 sm:grid-cols-2">
         <div className="space-y-1.5">
           <Label htmlFor="companyName">Company name</Label>
-          <Input id="companyName" name="companyName" defaultValue={values.company_name} required />
+          <Input id="companyName" name="companyName" defaultValue={values.company_name ?? ""} required />
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="contactPerson">Contact person</Label>
-          <Input id="contactPerson" name="contactPerson" defaultValue={values.contact_person} required />
+          <Input id="contactPerson" name="contactPerson" defaultValue={values.contact_person ?? ""} required />
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="phone">Phone</Label>

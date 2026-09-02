@@ -10,78 +10,118 @@ import type { LeadStatus } from "@/types/database";
 export async function submitQuoteRequest(
   formData: FormData
 ): Promise<ActionResult<{ quoteRequestNumber: string }>> {
-  const parsed = quoteFormSchema.safeParse(Object.fromEntries(formData));
+  try {
+    const parsed = quoteFormSchema.safeParse(Object.fromEntries(formData));
 
-  if (!parsed.success) {
-    const firstIssue = parsed.error.errors[0];
-    return fail(firstIssue?.message ?? "Please check your details and try again.");
+    if (!parsed.success) {
+      const firstIssue = parsed.error.errors[0];
+      return fail(firstIssue?.message ?? "Please check your details and try again.");
+    }
+
+    const values = parsed.data;
+    const admin = createAdminClient();
+
+    const { data, error } = await admin
+      .from("leads")
+      .insert({
+        business_name: values.businessName,
+        contact_name: values.contactName,
+        phone: values.phone,
+        email: values.email || null,
+        service: values.service || null,
+        pickup_address: values.pickupAddress,
+        delivery_address: values.deliveryAddress,
+        pickup_date: values.pickupDate || null,
+        package_type: values.packageType || null,
+        weight: values.weight || null,
+        number_of_packages: values.number_of_packages || null,
+        message: values.specialInstructions || null,
+        source: "website",
+      })
+      .select("quote_request_number")
+      .single();
+
+    if (error || !data) {
+      console.error("[submitQuoteRequest] insert failed:", error?.message);
+      return fail("We could not save your request. Please try again in a moment.");
+    }
+
+    return ok({ quoteRequestNumber: data.quote_request_number ?? "" }, "Request received");
+  } catch (err) {
+    // Surfaces configuration/startup errors (e.g. missing env vars) to the
+    // user instead of leaving the form hanging on an unhandled rejection.
+    console.error("[submitQuoteRequest] unexpected error:", err);
+    return fail(toErrorMessage(err));
   }
+}
 
-  const values = parsed.data;
-  const admin = createAdminClient();
+/** Serializable state for useActionState-based forms. */
+export type QuoteFormState = {
+  ok: boolean;
+  error: string | null;
+  quoteNumber: string | null;
+};
 
-  const { data, error } = await admin
-    .from("leads")
-    .insert({
-      business_name: values.businessName,
-      contact_name: values.contactName,
-      phone: values.phone,
-      email: values.email || null,
-      service: values.service,
-      pickup_address: values.pickupAddress,
-      delivery_address: values.deliveryAddress,
-      pickup_date: values.pickupDate || null,
-      package_type: values.packageType,
-      weight: values.weight,
-      number_of_packages: values.number_of_packages,
-      message: values.specialInstructions || null,
-      source: "website",
-    })
-    .select("quote_request_number")
-    .single();
-
-  if (error || !data) {
-    return fail("We could not save your request. Please try again in a moment.");
-  }
-
-  return ok({ quoteRequestNumber: data.quote_request_number ?? "" }, "Request received");
+/**
+ * Progressive-enhancement wrapper around submitQuoteRequest with the
+ * (prevState, formData) signature required by React's useActionState.
+ * Returns only plain serializable values.
+ */
+export async function submitQuoteRequestForm(
+  _prev: QuoteFormState,
+  formData: FormData
+): Promise<QuoteFormState> {
+  const result = await submitQuoteRequest(formData);
+  return {
+    ok: result.ok,
+    error: result.ok ? null : result.error,
+    quoteNumber: result.ok ? (result.data?.quoteRequestNumber ?? "") : null,
+  };
 }
 
 /** Contact form — stored as a lead for follow-up. */
 export async function submitContactForm(
   formData: FormData
 ): Promise<ActionResult<{ quoteRequestNumber: string }>> {
-  const parsed = quoteFormSchema.safeParse({
-    businessName: formData.get("name") ?? "",
-    contactName: formData.get("name") ?? "",
-    phone: formData.get("phone") ?? "",
-    email: formData.get("email") ?? "",
-    message: formData.get("message") ?? "",
-    pickupAddress: "Contact form",
-    deliveryAddress: "Contact form",
-  });
+  try {
+    const parsed = quoteFormSchema.safeParse({
+      businessName: formData.get("name") ?? "",
+      contactName: formData.get("name") ?? "",
+      phone: formData.get("phone") ?? "",
+      email: formData.get("email") ?? "",
+      message: formData.get("message") ?? "",
+      pickupAddress: "Contact form",
+      deliveryAddress: "Contact form",
+    });
 
-  if (!parsed.success) {
-    return fail(parsed.error.errors[0]?.message ?? "Please check your details.");
+    if (!parsed.success) {
+      return fail(parsed.error.errors[0]?.message ?? "Please check your details.");
+    }
+
+    const admin = createAdminClient();
+    const { data, error } = await admin
+      .from("leads")
+      .insert({
+        business_name: String(formData.get("name") ?? ""),
+        contact_name: String(formData.get("name") ?? ""),
+        phone: String(formData.get("phone") ?? ""),
+        email: String(formData.get("email") ?? "").toLowerCase() || null,
+        message: String(formData.get("message") ?? ""),
+        source: "contact",
+      })
+      .select("quote_request_number")
+      .single();
+
+    if (error || !data) {
+      console.error("[submitContactForm] insert failed:", error?.message);
+      return fail("We could not send your message. Please try again.");
+    }
+
+    return ok({ quoteRequestNumber: data.quote_request_number ?? "" }, "Message sent");
+  } catch (err) {
+    console.error("[submitContactForm] unexpected error:", err);
+    return fail(toErrorMessage(err));
   }
-
-  const admin = createAdminClient();
-  const { data, error } = await admin
-    .from("leads")
-    .insert({
-      business_name: String(formData.get("name") ?? ""),
-      contact_name: String(formData.get("name") ?? ""),
-      phone: String(formData.get("phone") ?? ""),
-      email: String(formData.get("email") ?? "").toLowerCase() || null,
-      message: String(formData.get("message") ?? ""),
-      source: "contact",
-    })
-    .select("quote_request_number")
-    .single();
-
-  if (error || !data) return fail("We could not send your message. Please try again.");
-
-  return ok({ quoteRequestNumber: data.quote_request_number ?? "" }, "Message sent");
 }
 
 /** Admin: update a lead's status. */
